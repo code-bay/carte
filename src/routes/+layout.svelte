@@ -9,6 +9,7 @@
 
 <style lang="scss">
 #root {
-	font: var(--title-large);
+	background-color: #020617;
+	color: #94a3b8;
 }
 </style>
