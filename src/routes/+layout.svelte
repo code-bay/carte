@@ -8,7 +8,7 @@
 
 <style lang="scss">
 #root {
-  background: grey;
-  color: purple;
+	background: grey;
+	color: purple;
 }
 </style>
