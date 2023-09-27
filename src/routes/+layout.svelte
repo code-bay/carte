@@ -9,7 +9,7 @@
 
 <style lang="scss">
 #root {
-	background-color: #020617;
-	color: #94a3b8;
+	background-color: var(--surface);
+	color: var(--on-surface);
 }
 </style>
