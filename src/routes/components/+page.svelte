@@ -3,6 +3,7 @@
 	import FloatingActionButton from "$components/buttons/FloatingActionButton.svelte";
 	import IconButton from "$components/buttons/IconButton.svelte"
   import TextField from "$components/TextField.svelte";
+	import Divider from "$components/Divider.svelte"
 </script>
 
 <div class="grid">
@@ -18,6 +19,8 @@
 			icon: "mdi:person-outline"
 		}}/>
 	</div>
+
+	<Divider />
 
 	<div class="item">
 		<FloatingActionButton props={{
@@ -39,6 +42,8 @@
 		}}/>
 	</div>
 
+	<Divider />
+
 	<div class="item">
 		<IconButton props={{
 			icon: "mdi:heart-outline",
@@ -52,6 +57,8 @@
 			target: "_blank"
 		}}/>
 	</div>
+
+	<Divider />
 
 	<div class="item">
 		<TextField props={{
