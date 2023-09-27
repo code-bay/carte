@@ -1,0 +1,25 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	min-width: 360px;
+}
+
+h1, input {
+	all: unset;
+}
+
+a[class] {
+	text-decoration: none;
+}	
+
+button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+}
