@@ -15,7 +15,7 @@
 
 		<SimpleButton props={{
 			label: "Click me 2",
-			variant: "text",
+			variant: "tonal",
 			icon: "mdi:person-outline"
 		}}/>
 	</div>
