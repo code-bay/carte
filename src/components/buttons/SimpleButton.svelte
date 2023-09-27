@@ -12,26 +12,29 @@
 		href?: string,
 		form?: string
 	}
+
+	const { label, variant, target, icon, href, form } = props
 </script>
 
-{#if props.href}
+{#if href}
 	<a 
-		class={`simple-button ${props.variant} target ripple`}
+		class={`simple-button ${variant} target ripple`}
 		data-sveltekit-preload-data={preload} 
-		href={props.href} target={props.target} 
+		{href} 
+		{target} 
 	>
-		{#if props.icon} <Icon icon={props.icon} /> {/if}
-		{props.label}
+		{#if icon} <Icon {icon} /> {/if}
+		{label}
 	</a>
 {:else}
 	<button 
-		class={`simple-button ${props.variant} target ripple`} 
+		class={`simple-button ${variant} target ripple`} 
 		{type} 
-		form={props.form} 
+		{form} 
 		on:click={() => action}
 	>
-		{#if props.icon} <Icon icon={props.icon} /> {/if}
-		{props.label}
+		{#if icon} <Icon {icon} /> {/if}
+		{label}
 	</button>
 {/if}
 
