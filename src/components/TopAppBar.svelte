@@ -14,7 +14,7 @@
 				<img class="top-app-bar__logo" src={logo} alt="app logo"/>
 			</a>
 		{/if}
-		<span class="top-app-bar__title">{title}</span>
+		<span class="top-app-bar__title" class:margin-left={logo}>{title}</span>
 	</section>
 	{#if $$slots}
 		<slot/>
@@ -42,7 +42,10 @@
 	&__title {
 		color: var(--on-surface);
 		font: var(--title-large);
-		margin-left: 16px;
 	}
+}
+
+.margin-left {
+	margin-left: 16px;
 }
 </style>

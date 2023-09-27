@@ -1,13 +1,8 @@
 <script lang="ts">
-  import TopAppBar from "$components/TopAppBar.svelte";
 	import "../styles/index.scss"
 </script>
 
 <div id="root">
-	<TopAppBar props={{
-		title: "Carte"
-	}} />
-	
 	<slot />
 </div>
 
