@@ -2,6 +2,7 @@
 	import SimpleButton from "$components/buttons/SimpleButton.svelte";
 	import FloatingActionButton from "$components/buttons/FloatingActionButton.svelte";
 	import IconButton from "$components/buttons/IconButton.svelte"
+  import TextField from "$components/TextField.svelte";
 </script>
 
 <div class="grid">
@@ -49,6 +50,13 @@
 			variant: "filled",
 			href: "https://www.youtube.com/watch?v=0Q8az-0xnVA",
 			target: "_blank"
+		}}/>
+	</div>
+
+	<div class="item">
+		<TextField props={{
+			label: "Escreva aqui!",
+			name: "test"
 		}}/>
 	</div>
 </div>
