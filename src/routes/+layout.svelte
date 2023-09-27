@@ -1,4 +1,5 @@
 <script lang="ts">
+	import "../styles/index.scss"
 </script>
 
 <div id="root">
@@ -8,7 +9,6 @@
 
 <style lang="scss">
 #root {
-	background: grey;
-	color: purple;
+	font: var(--title-large);
 }
 </style>
