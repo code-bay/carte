@@ -1,6 +1,7 @@
 <script lang="ts">
 	import SimpleButton from "$components/buttons/SimpleButton.svelte";
 	import FloatingActionButton from "$components/buttons/FloatingActionButton.svelte";
+	import IconButton from "$components/buttons/IconButton.svelte"
 </script>
 
 <div class="grid">
@@ -34,6 +35,20 @@
 			icon: "mdi:arrow-right",
 			variant: "primary",
 			size: "large"
+		}}/>
+	</div>
+
+	<div class="item">
+		<IconButton props={{
+			icon: "mdi:heart-outline",
+			variant: "standard"
+		}}/>
+
+		<IconButton props={{
+			icon: "mdi:heart",
+			variant: "filled",
+			href: "https://www.youtube.com/watch?v=0Q8az-0xnVA",
+			target: "_blank"
 		}}/>
 	</div>
 </div>
