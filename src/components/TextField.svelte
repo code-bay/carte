@@ -19,30 +19,36 @@
 	const { label, name, disabled, error, icon, maxlength, minlength, readonly, required, text } = props
 </script>
 
-<label class="text-field" class:hasIcon={icon} class:hasError={error} class:readonly>
-	<input 
-		class="input"
-		{type}
-		{name}
-		placeholder={label}
-		{minlength}
-		{maxlength}
-		{value}
-		{disabled}
-		{readonly}
-		{required}
-	>
-	<span class="label">{label}</span>
-	{#if icon} <Icon {icon} /> {/if}
-</label>
+<div class="field-wrapper">
+	<label class="text-field" class:hasIcon={icon} class:hasError={error} class:readonly>
+		<input 
+			class="input"
+			{type}
+			{name}
+			placeholder={label}
+			{minlength}
+			{maxlength}
+			{value}
+			{disabled}
+			{readonly}
+			{required}
+		>
+		<span class="label">{label}</span>
+		{#if icon} <Icon {icon} /> {/if}
+	</label>
 
-{#if error || text}
-	<div class="supporting-text" class:hasError={error}>
-		{error ? error : text ? text : ""}
-	</div>
-{/if}
+	{#if error || text}
+		<div class="supporting-text" class:hasError={error}>
+			{error ? error : text ? text : ""}
+		</div>
+	{/if}
+</div>
 
 <style lang="scss">
+.field-wrapper {
+	width: 100%;
+}
+
 .text-field {
 	align-items: center;
 	display: flex;
