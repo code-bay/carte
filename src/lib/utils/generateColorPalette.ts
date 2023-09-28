@@ -1,6 +1,6 @@
 import { argbFromHex, themeFromSourceColor, applyTheme } from "@material/material-color-utilities";
 
-export function generateColorPallete(color: string) {
+export function generateColorPalette(color: string) {
   const theme = themeFromSourceColor(argbFromHex(color), [
     {
       name: "custom-1",
