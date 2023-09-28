@@ -1,4 +1,4 @@
-import type { PageLoad } from '../$types';
+import type { PageLoad } from './$types';
 import { generateRandomColor } from '$lib/utils/generateRandomColor'
 
 export const load = (async () => {
