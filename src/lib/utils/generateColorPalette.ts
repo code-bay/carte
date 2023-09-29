@@ -1,13 +1,16 @@
-import { argbFromHex, themeFromSourceColor, applyTheme } from "@material/material-color-utilities";
+import { hexFromArgb, argbFromHex, themeFromSourceColor } from "@material/material-color-utilities";
+
+type Map = {
+  [key: string]: string | undefined
+}
 
 export function generateColorPalette(color: string) {
-  const theme = themeFromSourceColor(argbFromHex(color), [
-    {
-      name: "custom-1",
-      value: argbFromHex(color),
-      blend: true,
-    },
-  ]);
+  const theme = themeFromSourceColor(argbFromHex(color), []); 
+  const hexColors: Map = {};
 
-  applyTheme(theme, {target: document.body, dark: true});
+  for (const [key, value] of Object.entries(theme.schemes.dark.toJSON())) {
+    hexColors[key] = hexFromArgb(value);
+  }
+
+  return hexColors;
 }
