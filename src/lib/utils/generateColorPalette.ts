@@ -4,11 +4,13 @@ type Map = {
   [key: string]: string | undefined
 }
 
-export function generateColorPalette(color: string) {
+type Theme = "dark" | "light"
+
+export function generateColorPalette(color: string, variant: Theme = "dark") {
   const theme = themeFromSourceColor(argbFromHex(color), []); 
   const hexColors: Map = {};
 
-  for (const [key, value] of Object.entries(theme.schemes.dark.toJSON())) {
+  for (const [key, value] of Object.entries(theme.schemes[variant].toJSON())) {
     hexColors[key] = hexFromArgb(value);
   }
 
