@@ -8,7 +8,8 @@
 	<SimpleButton props={{
 		label: "Get started",
 		variant: "filled",
-		icon: "mdi:arrow-right"
+		icon: "mdi:arrow-right",
+		href: "./builder"
 	}}/>
 </div>
 
