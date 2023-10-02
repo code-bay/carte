@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
+	import BottomSheet from "$components/sheets/BottomSheet.svelte";
 	import { setPalette } from "$lib/index.js";
 	import { onMount } from "svelte";
 
@@ -62,6 +63,9 @@
 			</div>
 		</div>
 	</div>
+	<BottomSheet>
+		<!-- * MOBILE FORM FIELDS HERE -->
+	</BottomSheet>
 </div>
 
 <style lang="scss">
