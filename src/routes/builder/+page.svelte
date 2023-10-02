@@ -1,6 +1,15 @@
 <script lang="ts">
+	import { setPalette } from "$lib/index.js";
+	import { onMount } from "svelte";
+
+	export let data;
 	let src: string | null | undefined = "/upload.webp";
 	let inputFile: any;
+
+	onMount(() => {
+		let root = document.documentElement
+		setPalette(root, data.palette)
+	})
 
   function openFile() {
 		if (inputFile.files[0]) {
@@ -71,7 +80,6 @@
 
 	.photo {
 		background-color: var(--on-primary);
-		border: 2px solid var(--primary);
 		border-radius: var(--corner-full);
 		height: 200px;
 		margin-bottom: 32px;
