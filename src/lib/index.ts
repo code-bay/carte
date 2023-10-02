@@ -1,1 +1,3 @@
-// place files you want to import through the `$lib` alias in this folder.
+export { generateColorPalette } from "./utils/generateColorPalette";
+export { generateRandomColor } from "./utils/generateRandomColor";
+export { setPalette } from "./utils/setPalette";
