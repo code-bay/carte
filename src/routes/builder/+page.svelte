@@ -122,9 +122,8 @@
 	}
 
 	.underline {
-		background: var(--primary);
-		border-radius: var(--corner-full);
-		height: 2px;
+		border: 1px solid var(--primary);
+		height: 0;
 		margin-bottom: 16px;
 		width: 32px;
 	}

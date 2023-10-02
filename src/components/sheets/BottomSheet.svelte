@@ -10,7 +10,12 @@
 	max-height: 480px;
 	overflow-y: auto;
 	padding: 32px 16px 16px 16px;
-	position: absolute;
+	position: fixed;
+	transform: translateY(480px);
 	width: 100%;
+}
+
+.show {
+	transform: translateY(0);
 }
 </style>
