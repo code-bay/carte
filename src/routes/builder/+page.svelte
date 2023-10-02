@@ -1,6 +1,17 @@
 <script lang="ts">
+	import Icon from "@iconify/svelte";
+	import BottomSheet from "$components/sheets/BottomSheet.svelte";
+	import { setPalette } from "$lib/index.js";
+	import { onMount } from "svelte";
+
+	export let data;
 	let src: string | null | undefined = "/upload.webp";
 	let inputFile: any;
+
+	onMount(() => {
+		let root = document.documentElement
+		setPalette(root, data.palette)
+	})
 
   function openFile() {
 		if (inputFile.files[0]) {
@@ -16,33 +27,45 @@
 </script>
 
 <div class="builder">
-
 	<div class="card">
-		<div class="head">
+		<div class="presentation">
 			<label class="photo" on:change={() => openFile()}>
 				<input type="file" {src} bind:this={inputFile} style="display: none;"/>
 				<img {src} alt="Profile"/>
 			</label>
 			<h2 class="name">Heron Nepomuceno</h2>
 			<h3 class="work">Desenvolvedor Web</h3>
-		</div>
+			<div class="underline"></div>
 
-		<div class="body">
-			<div class="describe-section">
-				<h4 class="title">Sobre mim</h4>
-				<p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-			</div>
+			<div class="infos">
+				<div class="item">
+					<div class="icon"><Icon icon="mdi:phone"/></div>
+					<div class="description">
+						<span>+55 (86) 99594-1993</span>
+						<span>+55 (86) 99594-1993</span>
+					</div>
+				</div>
 
-			<div class="list-section">
-				<h4 class="title">Serviços</h4>
-				<ul class="list">
-					<li class="item">Desenvolvimento de Websites</li>
-					<li class="item">Construção de Sistemas</li>
-					<li class="item">Codificação de API Rest</li>
-				</ul>
+				<div class="item">
+					<div class="icon"><Icon icon="mdi:link"/></div>
+					<div class="description">
+						<span>https://heron.pages.dev/</span>
+					</div>
+				</div>
+
+				<div class="item">
+					<div class="icon"><Icon icon="mdi:map-marker-outline"/></div>
+					<div class="description">
+						<!-- * MAX LENGHT 48 -->
+						<span>Parnaíba, Piauí - Bairro Dirceu Arcoverde</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+	<BottomSheet>
+		<!-- * MOBILE FORM FIELDS HERE -->
+	</BottomSheet>
 </div>
 
 <style lang="scss">
@@ -55,28 +78,30 @@
 }
 
 .card {
-	background: var(--surface-container-high);
+	background: var(--surface-variant);
 	border-radius: var(--corner-medium);
-	margin: 16px 0 32px 0;
-	padding: 32px;
-	width: 100%;
+	color: var(--on-surface-variant);
+	display: flex;
+	height: 192px;
+	padding: 16px;
+	position: relative;
+	width: 336px;
 }
 
-.head {
-	align-items: center;
+.presentation {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	margin-bottom: 48px;
 
 	.photo {
-		background-color: var(--on-primary);
-		border: 2px solid var(--primary);
+		background-color: var(--primary);
 		border-radius: var(--corner-full);
-		height: 200px;
+		height: 80px;
 		margin-bottom: 32px;
 		padding: 4px;
-		width: 200px;
+		position: absolute;
+		right: 8px;
+		width: 80px;
 
 		img {
 			border-radius: var(--corner-full);
@@ -87,34 +112,51 @@
 	}
 
 	.name {
-		font: var(--title-large);
-		margin-bottom: 8px;
+		font: var(--title-small);
+		margin-bottom: 2px;
 	}
 
 	.work {
-		font: var(--headline-medium);
+		padding-bottom: 4px;
+		font: var(--label-medium);
+	}
+
+	.underline {
+		border: 1px solid var(--primary);
+		height: 0;
+		margin-bottom: 16px;
+		width: 32px;
 	}
 }
 
-.body {
-	.describe-section {
-		margin-bottom: 48px;
-		width: 100%;
+.infos {
+	display: flex;
+	flex-direction: column;
+	width: 168px;
+
+	.item {
+		align-items: center;
+		display: flex;
+		margin-bottom: 6px;
 	}
 
-	.title {
-		font: var(--title-medium);
-		margin-bottom: 32px;
-	}
-
-	.description, .item {
-		font: var(--label-large);
-	}
-
-	.list {
+	.icon {
+		background: var(--on-primary);
+		border-radius: var(--corner-full);
 		display: grid;
-		gap: 4px 0;
-		padding-left: 24px;
+		margin-right: 8px;
+		padding: 2px;
+
+		:global(.iconify) {
+			height: 20px;
+			width: 20px;
+		}
+	}
+
+	.description {
+		display: flex;
+		flex-direction: column;
+		font: var(--label-small);
 	}
 }
 </style>

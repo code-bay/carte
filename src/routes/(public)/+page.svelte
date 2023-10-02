@@ -1,5 +1,14 @@
 <script lang="ts">
 	import SimpleButton from "$components/buttons/SimpleButton.svelte";
+	import { setPalette } from "$lib/index";
+	import { onMount } from "svelte";
+
+	export let data;
+
+	onMount(() => {
+		let root = document.documentElement
+		setPalette(root, data.palette)
+	})
 </script>
 
 <div class="presentation">

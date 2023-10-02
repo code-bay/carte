@@ -7,7 +7,7 @@
 
 <div id="root">
 	<div class="view">
-		<TopAppBar props={{ title: "Carte"}}/>
+		<TopAppBar props={{ title: "Carte", logo: "/minimal-carte-logo.svg"}}/>
 		<main>
 			<slot />
 		</main>
