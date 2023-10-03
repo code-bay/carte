@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
 	import BottomSheet from "$components/sheets/BottomSheet.svelte";
+	import SideSheet from "$components/sheets/SideSheet.svelte";
 
 	let src: string | null | undefined = "/upload.webp";
 	let inputFile: any;
@@ -54,7 +55,17 @@
 				</div>
 			</div>
 		</div>
+		<!-- <FloatingActionButton props={{
+			variant: "primary",
+			icon: "mdi:application-edit-outline",
+			label: "Edit card",
+			fixed: true,
+			size: "extended"
+		}}/> -->
 	</div>
+	<SideSheet props={{ title: "Card builder"}}>
+		<!-- * DESKTOP FORM FIELDS HERE -->
+	</SideSheet>
 	<BottomSheet>
 		<!-- * MOBILE FORM FIELDS HERE -->
 	</BottomSheet>
@@ -70,6 +81,7 @@
 }
 
 .card {
+	aspect-ratio: 6/4;
 	background: var(--surface-variant);
 	border-radius: var(--corner-medium);
 	color: var(--on-surface-variant);
