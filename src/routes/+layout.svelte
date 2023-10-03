@@ -3,27 +3,42 @@
 	import Icon from '@iconify/svelte';
 	import Divider from '$components/Divider.svelte';
 	import TopAppBar from '$components/TopAppBar.svelte';
+	import { innerWidth } from "$lib/store/innerWidth";
+	import { onMount } from "svelte";
+	import { fade } from "svelte/transition";
+	import { setPalette } from "$lib/index";
+
+	export let data;
+	let allSet: boolean;
+
+	onMount(() => {
+		const root = document.querySelector(':root');
+		setPalette(root, data.palette)
+		allSet = true;
+	})
 </script>
 
-<div id="root">
-	<div class="view">
-		<TopAppBar props={{ title: "Carte", logo: "/minimal-carte-logo.svg"}}/>
-		<main>
-			<slot />
-		</main>
-		<Divider/>
-		<footer>
-			<Icon icon="material-symbols:copyright-outline-rounded" />
-			<span>
-				Codebay {new Date().getFullYear()}
-			</span>
-		</footer>
+<svelte:window bind:innerWidth={$innerWidth}/>
+{#if allSet}
+	<div id="root" transition:fade={{ duration: 200 }}>
+		<div class="view">
+			<TopAppBar props={{ title: "Carte" }}/>
+			<main>
+				<slot />
+			</main>
+			<footer>
+				<Icon icon="material-symbols:copyright-outline-rounded" />
+				<span>
+					Codebay {new Date().getFullYear()}
+				</span>
+			</footer>
+		</div>
 	</div>
-</div>
+{/if}
 
 <style lang="scss">
 #root {
-	background-color: var(--surface);
+	background: var(--surface);
 	color: var(--on-surface);
 }
 
