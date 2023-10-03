@@ -1,17 +1,9 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
 	import BottomSheet from "$components/sheets/BottomSheet.svelte";
-	import { setPalette } from "$lib/index.js";
-	import { onMount } from "svelte";
 
-	export let data;
 	let src: string | null | undefined = "/upload.webp";
 	let inputFile: any;
-
-	onMount(() => {
-		let root = document.documentElement
-		setPalette(root, data.palette)
-	})
 
   function openFile() {
 		if (inputFile.files[0]) {
@@ -94,7 +86,7 @@
 	justify-content: center;
 
 	.photo {
-		background-color: var(--primary);
+		background: var(--primary);
 		border-radius: var(--corner-full);
 		height: 80px;
 		margin-bottom: 32px;
