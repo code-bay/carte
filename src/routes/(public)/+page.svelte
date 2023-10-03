@@ -17,19 +17,22 @@
 .presentation {
 	max-width: 600px;
 
-	&::before {
-		--mask: 
-			radial-gradient(40.00px at 56.00px 50%,#000 99%,#0000 101%) 0 calc(50% - 64px)/100% 128px,
-			radial-gradient(40.00px at -24px 50%,#0000 99%,#000 101%) 32px 50%/100% 128px repeat-y;
-		-webkit-mask: var(--mask);
-		mask: var(--mask);
-		content: "";
-		position: absolute;
-		top: 0;
-		right: 0;
-		width: 200px;
-		height: 100%;
-		background: var(--primary);
+
+	@media (min-width: 840px) {
+		&::before {
+			--mask: 
+				radial-gradient(40.00px at 56.00px 50%,#000 99%,#0000 101%) 0 calc(50% - 64px)/100% 128px,
+				radial-gradient(40.00px at -24px 50%,#0000 99%,#000 101%) 32px 50%/100% 128px repeat-y;
+			-webkit-mask: var(--mask);
+			mask: var(--mask);
+			content: "";
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 200px;
+			height: 100%;
+			background: var(--primary);
+		}
 	}
 }
 
