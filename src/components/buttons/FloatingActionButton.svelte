@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 
-	export let action: Function = () => {};
+	export let onClick: Function | any = () => {};
 	export let type: 'button' | 'submit' = 'button';
 	export let props: {
 		variant: 'surface' | 'primary' | 'secondary' | 'tertiary' | 'primary-container'
@@ -33,7 +33,7 @@
 		class={`floating-action-button ${variant} ${size} target ripple`}
 		class:fixed
 		class:isSecondary
-		on:click={() => action}
+		on:click={onClick}
 	>
 		{#if icon} <Icon {icon} /> {/if}
 		{#if label} <span class="label">{label}</span> {/if}

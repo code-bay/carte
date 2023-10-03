@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 
-	export let action: Function = () => {};
+	export let onClick: Function | any = () => {};
 	export let preload: 'hover' | 'tap' = 'hover'
 	export let type: 'submit' | 'button' = 'button'
 	export let props: {
@@ -31,7 +31,7 @@
 		class={`simple-button ${variant} target ripple`} 
 		{type} 
 		{form} 
-		on:click={() => action}
+		on:click={onClick}
 	>
 		{#if icon} <Icon {icon} /> {/if}
 		{label}

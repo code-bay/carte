@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 
-	export let action: Function = () => {};
+	export let onClick: Function | any = () => {};
 	export let type: 'submit' | 'button' = 'button';
 	export let props: {
 		icon: string,
@@ -20,7 +20,7 @@
 		</span>
 	</a>
 {:else}
-	<button class="target" on:click={() => action} {type}>
+	<button class="target" on:click={onClick} {type}>
 		<span class={`icon-button ${variant} ripple`}>
 			<Icon {icon} />
 		</span>
