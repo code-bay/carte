@@ -1,4 +1,4 @@
-export function setPalette(root: HTMLElement, palette: any) {
+export function setPalette(root: any, palette: any) {
 	root.style.setProperty('--primary', palette.primary);
 	root.style.setProperty('--on-primary', palette.onPrimary);
 	root.style.setProperty('--primary-container', palette.primaryContainer);
