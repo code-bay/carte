@@ -3,13 +3,9 @@
 	import SimpleButton from "$components/buttons/SimpleButton.svelte";
 
 	let inputFile: any;
-
-	function uploadImage() {
-		console.log('clicado')
-	}
 </script>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 	<TextField props={{
 		label: "Name",
 		name: "name"
@@ -49,15 +45,20 @@
 			name: "color"
 		}}
 	/>
-	<!-- <input type="file" id="coverImage" bind:this={inputFile} style="display: none;"/>
-	<button on:click|preventDefault={inputFile.click()}>Selecione um arquivo</button>
+	<input
+		type="file"
+		accept="image/*"
+		bind:this={inputFile}
+		style="display: none;"
+		name="cover-image"
+	/>
 	<SimpleButton
-		action={() => {inputFile.click()}}
+		onClick={() => inputFile.click()}
 		props={{
 			label: "Upload image",
 			variant: "tonal"
 		}}
-	/> -->
+	/>
 
 	<SimpleButton
 		type="submit"
