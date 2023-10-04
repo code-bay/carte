@@ -2,9 +2,20 @@
 	import Icon from "@iconify/svelte";
 	import BottomSheet from "$components/sheets/BottomSheet.svelte";
 	import SideSheet from "$components/sheets/SideSheet.svelte";
+	import { toBlob } from 'html-to-image';
+	import { saveAs } from "file-saver";
+	import SimpleButton from "$components/buttons/SimpleButton.svelte";
 
 	let src: string | null | undefined = "/upload.webp";
 	let inputFile: any;
+	let card: any;
+
+	function saveCard() {
+		toBlob(card).then(blob => {
+			// @ts-ignore
+			saveAs(blob, 'card.png')
+		})
+	}
 
   function openFile() {
 		if (inputFile.files[0]) {
@@ -20,7 +31,7 @@
 </script>
 
 <div class="builder">
-	<div class="card">
+	<div class="card" bind:this={card}>
 		<div class="presentation">
 			<label class="photo" on:change={() => openFile()}>
 				<input type="file" {src} bind:this={inputFile} style="display: none;"/>
@@ -63,6 +74,13 @@
 			size: "extended"
 		}}/> -->
 	</div>
+	<SimpleButton
+		onClick={() => saveCard()}
+		props={{
+			label: "Download card",
+			variant: "tonal"
+		}}
+	/>
 	<SideSheet props={{ title: "Card builder"}}>
 		<!-- * DESKTOP FORM FIELDS HERE -->
 	</SideSheet>
