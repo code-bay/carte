@@ -1,7 +1,6 @@
 <script lang="ts">
 	import "../styles/index.scss";
 	import Icon from '@iconify/svelte';
-	import Divider from '$components/Divider.svelte';
 	import TopAppBar from '$components/TopAppBar.svelte';
 	import { innerWidth } from "$lib/stores/innerWidth";
 	import { onMount } from "svelte";
