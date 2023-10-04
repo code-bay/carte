@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
-	import BottomSheet from "$components/sheets/BottomSheet.svelte";
-	import SideSheet from "$components/sheets/SideSheet.svelte";
+	import SideSheet from "$components/SideSheet.svelte";
 	import SimpleButton from "$components/buttons/SimpleButton.svelte";
 	import TextField from "$components/TextField.svelte";
 	import { toBlob } from 'html-to-image';
@@ -150,9 +149,6 @@
 			/>
 		</form>
 	</SideSheet>
-	<BottomSheet>
-		<!-- * MOBILE FORM FIELDS HERE -->
-	</BottomSheet>
 </div>
 
 <style lang="scss">
