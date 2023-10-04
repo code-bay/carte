@@ -4,6 +4,9 @@
 	import SimpleButton from "$components/buttons/SimpleButton.svelte";
 	import TextField from "$components/TextField.svelte";
 	import FloatingActionButton from "$components/buttons/FloatingActionButton.svelte";
+	import SelectInput from "$components/SelectInput.svelte";
+	import HorizontalCard from "$components/cards/HorizontalCard.svelte";
+	import VerticalCard from "$components/cards/VerticalCard.svelte";
 	import { toBlob } from 'html-to-image';
 	import { saveAs } from "file-saver";
 	import { innerWidth } from "$lib/stores/innerWidth";
@@ -12,8 +15,6 @@
 
 	export let data: PageData;
 
-	let src: string | null | undefined = "/upload.webp";
-	let inputFile: any;
 	let card: any;
 	let coverImage: any;
 
@@ -25,55 +26,58 @@
 		})
 	}
 
-  function openFile() {
-		if (inputFile.files[0]) {
-			const reader = new FileReader();
-			reader.onload = () => {
-				if(typeof reader.result == "string") {
-					src = reader.result;
-				}
-			};
-			reader.readAsDataURL(inputFile.files[0]);
-		}
-  }
+	let carte = {
+		company: "Higia Tech",
+		info_1: {
+			icon: "mdi:phone",
+			main: "+55 (86) 99594-199",
+			alt: "+55 (86) 99594-199"
+		},
+		info_2: {
+			icon: "link",
+			main: "https://heron.pages.dev",
+			alt: "https://heron.pages.dev"
+		},
+		info_3: {
+			icon: "location",
+			main: "Parnaíba, Piauí - Bairro Dirceu Arcoverde",
+			alt: ""
+		},
+		info_4: {
+			icon: "twitter",
+			main: "r",
+			alt: ""
+		},
+		name: "Heron Nepomuceno",
+		role: "Desenvolvedor Web",
+		type: "horizontal"
+	}
+
+	const customization = [
+		{ itemLimit: 3, label: "Horizontal", value: "horizontal" },
+		{ itemLimit: 4, label: "Vertical", value: "vertical" }
+	]
+
+	$: config = customization.find(i => i.value === carte.type) ?? "horizontal"
+
+	const infoIcons = [
+		{label: "Email", value:"mdi:email"},
+		{label: "Facebook", value:"ri:facebook-fill"}, // better going for the simpler and cleaner icon
+		{label: "Generic link", value:"mdi:link"},
+		{label: "Location", value:"mdi:location"},
+		{label: "Phone", value:"mdi:phone"},
+		{label: "Twitter", value:"mdi:twitter"},
+		{label: "X / Twitter", value:"ri:twitter-x-fill"}
+	]
 </script>
 
-<div class="builder">
-	<div class="card" bind:this={card}>
-		<div class="presentation">
-			<label class="photo" on:change={() => openFile()}>
-				<input type="file" {src} bind:this={inputFile} style="display: none;"/>
-				<img {src} alt="Profile"/>
-			</label>
-			<h2 class="name">{data.user?.name ? data.user.name : "John Doe"}</h2>
-			<h3 class="work">{data.user?.job_title ? data.user.job_title : "Web Developer"}</h3>
-			<div class="underline"></div>
+<div class="builder builder--{carte.type}">
 
-			<div class="infos">
-				<div class="item">
-					<div class="icon"><Icon icon="mdi:phone"/></div>
-					<div class="description">
-						<span>{data.user?.phone ? data.user.phone : "+1 (999) 999-9999"}</span>
-					</div>
-				</div>
-
-				<div class="item">
-					<div class="icon"><Icon icon="mdi:link"/></div>
-					<div class="description">
-						<span>{data.user?.website ? data.user.website : "https://mysite.com"}</span>
-					</div>
-				</div>
-
-				<div class="item">
-					<div class="icon"><Icon icon="mdi:map-marker-outline"/></div>
-					<div class="description">
-						<!-- * MAX LENGHT 48 -->
-						<span>{data.user?.adress ? data.user.adress : "Runolfsson Squares"}</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	{#if carte.type === "horizontal"}
+		<HorizontalCard {carte} />
+	{:else if carte.type === "vertical"}
+		<VerticalCard {carte} />
+	{/if}
 
 	<SideSheet props={{ title: "Card editor" }}>
 		<form 
@@ -82,6 +86,11 @@
 			method="POST" 
 			enctype="multipart/form-data"
 		>
+			<SelectInput name="carte-type" bind:value={carte.type} options={customization}/>
+			{#each {length: config.itemLimit} as item, i} 
+				<SelectInput name="carte-info_{i+1}-icon" bind:value={carte[`info_${i+1}`].icon} options={infoIcons}/>
+			{/each}
+
 			<TextField props={{
 				label: "Name",
 				name: "name"
@@ -166,9 +175,13 @@
 .builder {
 	align-items: center;
 	display: flex;
-	flex-direction: column;
+	gap: 8px;
 	justify-content: center;
 	width: 100%;
+
+	&--horizontal {
+		flex-direction: column;
+	}
 
 	@media (min-width: 840px) {
 		padding-right: 400px + 32px;
@@ -180,90 +193,6 @@
 
 	@media (min-width: 1240px) {
 		padding-right: calc(400px + 96px);
-	}
-}
-
-.card {
-	aspect-ratio: 6/4;
-	background: var(--surface-variant);
-	border-radius: var(--corner-medium);
-	color: var(--on-surface-variant);
-	display: flex;
-	height: 192px;
-	padding: 16px;
-	position: relative;
-	width: 336px;
-}
-
-.presentation {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-
-	.photo {
-		background: var(--primary);
-		border-radius: var(--corner-full);
-		height: 80px;
-		margin-bottom: 32px;
-		padding: 4px;
-		position: absolute;
-		right: 8px;
-		width: 80px;
-
-		img {
-			border-radius: var(--corner-full);
-			height: 100%;
-			object-fit: cover;
-			width: 100%;
-		}
-	}
-
-	.name {
-		font: var(--title-small);
-		margin-bottom: 2px;
-	}
-
-	.work {
-		padding-bottom: 4px;
-		font: var(--label-medium);
-	}
-
-	.underline {
-		border: 1px solid var(--primary);
-		height: 0;
-		margin-bottom: 16px;
-		width: 32px;
-	}
-}
-
-.infos {
-	display: flex;
-	flex-direction: column;
-	width: 168px;
-
-	.item {
-		align-items: center;
-		display: flex;
-		margin-bottom: 6px;
-	}
-
-	.icon {
-		background: var(--on-primary);
-		border-radius: var(--corner-full);
-		display: grid;
-		margin-right: 8px;
-		padding: 2px;
-
-		:global(.iconify) {
-			height: 20px;
-			width: 20px;
-		}
-	}
-
-	.description {
-		display: flex;
-		flex-direction: column;
-		font: var(--label-small);
 	}
 }
 
