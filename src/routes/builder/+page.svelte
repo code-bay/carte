@@ -2,18 +2,24 @@
 	import Icon from "@iconify/svelte";
 	import BottomSheet from "$components/sheets/BottomSheet.svelte";
 	import SideSheet from "$components/sheets/SideSheet.svelte";
+	import SimpleButton from "$components/buttons/SimpleButton.svelte";
+	import TextField from "$components/TextField.svelte";
 	import { toBlob } from 'html-to-image';
 	import { saveAs } from "file-saver";
-	import SimpleButton from "$components/buttons/SimpleButton.svelte";
+	import type { PageData } from './$types';
+	
+	export let data: PageData;
 
 	let src: string | null | undefined = "/upload.webp";
 	let inputFile: any;
 	let card: any;
+	let coverImage: any;
 
 	function saveCard() {
 		toBlob(card).then(blob => {
-			// @ts-ignore
-			saveAs(blob, 'card.png')
+			if (blob) {
+				saveAs(blob, 'card.png')
+			}		
 		})
 	}
 
@@ -37,23 +43,22 @@
 				<input type="file" {src} bind:this={inputFile} style="display: none;"/>
 				<img {src} alt="Profile"/>
 			</label>
-			<h2 class="name">Heron Nepomuceno</h2>
-			<h3 class="work">Desenvolvedor Web</h3>
+			<h2 class="name">{data.response?.name ? data.response.name : "John Doe"}</h2>
+			<h3 class="work">{data.response?.job_title ? data.response.job_title : "Web Developer"}</h3>
 			<div class="underline"></div>
 
 			<div class="infos">
 				<div class="item">
 					<div class="icon"><Icon icon="mdi:phone"/></div>
 					<div class="description">
-						<span>+55 (86) 99594-1993</span>
-						<span>+55 (86) 99594-1993</span>
+						<span>{data.response?.phone ? data.response.phone : "+1 (999) 999-9999"}</span>
 					</div>
 				</div>
 
 				<div class="item">
 					<div class="icon"><Icon icon="mdi:link"/></div>
 					<div class="description">
-						<span>https://heron.pages.dev/</span>
+						<span>{data.response?.website ? data.response.website : "https://mysite.com"}</span>
 					</div>
 				</div>
 
@@ -61,7 +66,7 @@
 					<div class="icon"><Icon icon="mdi:map-marker-outline"/></div>
 					<div class="description">
 						<!-- * MAX LENGHT 48 -->
-						<span>Parnaíba, Piauí - Bairro Dirceu Arcoverde</span>
+						<span>{data.response?.adress ? data.response.adress : "Runolfsson Squares"}</span>
 					</div>
 				</div>
 			</div>
@@ -82,7 +87,68 @@
 		}}
 	/>
 	<SideSheet props={{ title: "Card builder"}}>
-		<!-- * DESKTOP FORM FIELDS HERE -->
+		<form method="POST" enctype="multipart/form-data">
+			<TextField props={{
+				label: "Name",
+				name: "name"
+			}}/>
+			<TextField props={{
+				label: "Job title",
+				name: "job-title"
+			}}/>
+			<TextField
+				type="tel"
+				props={{
+					label: "Phone",
+					name: "phone"
+				}}
+			/>
+			<TextField
+				type="email"
+				props={{
+					label: "Email",
+					name: "email"
+				}}
+			/>
+			<TextField props={{
+				label: "Website",
+				name: "website"
+			}}/>
+			<TextField
+				props={{
+					label: "Adress",
+					name: "adress"
+				}}
+			/>
+			<TextField
+				type="color"
+				props={{
+					label: "Color",
+					name: "color"
+				}}
+			/>
+			<input
+				type="file"
+				accept="image/*"
+				bind:this={coverImage}
+				style="display: none;"
+				name="cover-image"
+			/>
+			<SimpleButton
+				onClick={() => coverImage.click()}
+				props={{
+					label: "Upload image",
+					variant: "tonal"
+				}}
+			/>
+			<SimpleButton
+				type="submit"
+				props={{
+					label: "Create card",
+					variant: "filled"
+				}}
+			/>
+		</form>
 	</SideSheet>
 	<BottomSheet>
 		<!-- * MOBILE FORM FIELDS HERE -->

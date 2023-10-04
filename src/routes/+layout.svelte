@@ -7,8 +7,9 @@
 	import { onMount } from "svelte";
 	import { fade } from "svelte/transition";
 	import { setPalette } from "$lib/index";
+	import type { LayoutData } from "./$types";
 
-	export let data;
+	export let data: LayoutData;
 	let allSet: boolean;
 
 	onMount(() => {
