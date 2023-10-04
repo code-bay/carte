@@ -7,8 +7,9 @@ const db = deta.Base('simple_db');
 const drive = deta.Drive('card_images')
 
 export const load = (async () => {
-	const response = await db.get("card-info")
-	return { response };
+	const user = await db.get("card-info");
+
+	return { user };
 }) satisfies PageServerLoad;
 
 export const actions = {
@@ -22,7 +23,7 @@ export const actions = {
 			await image.arrayBuffer().then(buff => {
 				buffer = new Uint8Array(buff)
 			})
-			await drive.put("bg.jpg", { data: buffer });
+			await drive.put("bg.jpg", { data: buffer, contentType: image.type });
 		}
 
 		await db.put({

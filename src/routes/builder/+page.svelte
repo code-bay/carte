@@ -43,22 +43,22 @@
 				<input type="file" {src} bind:this={inputFile} style="display: none;"/>
 				<img {src} alt="Profile"/>
 			</label>
-			<h2 class="name">{data.response?.name ? data.response.name : "John Doe"}</h2>
-			<h3 class="work">{data.response?.job_title ? data.response.job_title : "Web Developer"}</h3>
+			<h2 class="name">{data.user?.name ? data.user.name : "John Doe"}</h2>
+			<h3 class="work">{data.user?.job_title ? data.user.job_title : "Web Developer"}</h3>
 			<div class="underline"></div>
 
 			<div class="infos">
 				<div class="item">
 					<div class="icon"><Icon icon="mdi:phone"/></div>
 					<div class="description">
-						<span>{data.response?.phone ? data.response.phone : "+1 (999) 999-9999"}</span>
+						<span>{data.user?.phone ? data.user.phone : "+1 (999) 999-9999"}</span>
 					</div>
 				</div>
 
 				<div class="item">
 					<div class="icon"><Icon icon="mdi:link"/></div>
 					<div class="description">
-						<span>{data.response?.website ? data.response.website : "https://mysite.com"}</span>
+						<span>{data.user?.website ? data.user.website : "https://mysite.com"}</span>
 					</div>
 				</div>
 
@@ -66,7 +66,7 @@
 					<div class="icon"><Icon icon="mdi:map-marker-outline"/></div>
 					<div class="description">
 						<!-- * MAX LENGHT 48 -->
-						<span>{data.response?.adress ? data.response.adress : "Runolfsson Squares"}</span>
+						<span>{data.user?.adress ? data.user.adress : "Runolfsson Squares"}</span>
 					</div>
 				</div>
 			</div>
