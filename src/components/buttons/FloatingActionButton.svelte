@@ -88,15 +88,11 @@
 }
 
 .fixed {
-	bottom: 96px;
+	bottom: 16px;
 	box-shadow: 0px 8px 12px 6px rgba(0, 0, 0, 0.15), 0px 4px 4px rgba(0, 0, 0, 0.3);
 	right: 16px;
 	position: fixed !important;
 	z-index: 1;
-
-	@media(min-width: 600px) {
-		bottom: 16px;
-	}
 }
 
 .isSecondary {
