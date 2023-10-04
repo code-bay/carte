@@ -3,10 +3,13 @@
 	import SideSheet from "$components/SideSheet.svelte";
 	import SimpleButton from "$components/buttons/SimpleButton.svelte";
 	import TextField from "$components/TextField.svelte";
+	import FloatingActionButton from "$components/buttons/FloatingActionButton.svelte";
 	import { toBlob } from 'html-to-image';
 	import { saveAs } from "file-saver";
+	import { innerWidth } from "$lib/stores/innerWidth";
+	import { isVisible } from "$lib/stores/isVisible";
 	import type { PageData } from './$types';
-	
+
 	export let data: PageData;
 
 	let src: string | null | undefined = "/upload.webp";
@@ -70,23 +73,15 @@
 				</div>
 			</div>
 		</div>
-		<!-- <FloatingActionButton props={{
-			variant: "primary",
-			icon: "mdi:application-edit-outline",
-			label: "Edit card",
-			fixed: true,
-			size: "extended"
-		}}/> -->
 	</div>
-	<SimpleButton
-		onClick={() => saveCard()}
-		props={{
-			label: "Download card",
-			variant: "tonal"
-		}}
-	/>
-	<SideSheet props={{ title: "Card builder"}}>
-		<form method="POST" enctype="multipart/form-data">
+
+	<SideSheet props={{ title: "Card editor" }}>
+		<form 
+			id="card-builder" 
+			slot="body" 
+			method="POST" 
+			enctype="multipart/form-data"
+		>
 			<TextField props={{
 				label: "Name",
 				name: "name"
@@ -119,13 +114,7 @@
 					name: "adress"
 				}}
 			/>
-			<TextField
-				type="color"
-				props={{
-					label: "Color",
-					name: "color"
-				}}
-			/>
+			<input type="color" name="color"/>
 			<input
 				type="file"
 				accept="image/*"
@@ -140,15 +129,37 @@
 					variant: "tonal"
 				}}
 			/>
-			<SimpleButton
-				type="submit"
-				props={{
-					label: "Create card",
-					variant: "filled"
-				}}
-			/>
 		</form>
+
+		<div class="bottom-actions" slot="footer">
+			<SimpleButton
+			type="submit"
+			props={{
+				label: "Save",
+				variant: "filled",
+				form: "card-builder"
+			}}/>
+	
+			<SimpleButton
+			onClick={() => saveCard()}
+			props={{
+				label: "Download",
+				variant: "tonal"
+			}}/>
+		</div>
 	</SideSheet>
+
+	{#if $innerWidth < 840 && $isVisible === false}
+		<FloatingActionButton 
+		onClick={() => $isVisible = true}
+		props={{
+			icon: "mdi:application-edit",
+			variant: "primary",
+			label: "Open editor",
+			size: "extended",
+			fixed: true
+		}}/>
+	{/if}
 </div>
 
 <style lang="scss">
@@ -158,6 +169,18 @@
 	flex-direction: column;
 	justify-content: center;
 	width: 100%;
+
+	@media (min-width: 840px) {
+		padding-right: 400px + 32px;
+	}
+
+	@media (min-width: 1080px) {
+		padding-right: 400px + 64px;
+	}
+
+	@media (min-width: 1240px) {
+		padding-right: calc(400px + 96px);
+	}
 }
 
 .card {
@@ -242,5 +265,18 @@
 		flex-direction: column;
 		font: var(--label-small);
 	}
+}
+
+#card-builder {
+	display: flex;
+	flex-direction: column;
+	gap: 16px 0;
+}
+
+.bottom-actions {
+	align-items: center;
+	display: flex;
+	gap: 0 8px;
+	width: 100%;
 }
 </style>
