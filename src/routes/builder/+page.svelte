@@ -32,28 +32,28 @@
 	}
 
 	let carte = {
-		name: data.user ? data.user.name : "Dario Brito Calcinhas",
-		role: data.user ? data.user.role : "CTO Higia",
-		company: data.user ? data.user.company : "Higia Tech",
+		name: data.user ? data.user.name : "John Doe",
+		role: data.user ? data.user.role : "Developer",
+		company: data.user ? data.user.company : "Deta Inc.",
 		image: data.file ? data.file : null,
 		info_1: {
 			icon: data.user ? data.user.carte_icon1_icon : "mdi:phone",
-			main: data.user ? data.user.carte_info1_main : "+55 (86) 99594-199",
-			alt: data.user ? data.user.carte_info1_alt : "+55 (86) 99594-199"
+			main: data.user ? data.user.carte_info1_main : "+49 1522 343333",
+			alt: data.user ? data.user.carte_info1_alt : "+49 1522 343333"
 		},
 		info_2: {
-			icon: data.user ? data.user.carte_icon2_icon : "link",
-			main: data.user ? data.user.carte_info2_main : "https://heron.pages.dev",
-			alt: data.user ? data.user.carte_info2_alt : "https://heron.pages.dev"
+			icon: data.user ? data.user.carte_icon2_icon : "mdi:link",
+			main: data.user ? data.user.carte_info2_main : "https://example.com/",
+			alt: data.user ? data.user.carte_info2_alt : ""
 		},
 		info_3: {
-			icon: data.user ? data.user.carte_icon3_icon : "location",
-			main: data.user ? data.user.carte_info3_main : "Parnaíba, Piauí - Bairro Dirceu Arcoverde",
+			icon: data.user ? data.user.carte_icon3_icon : "mdi:location",
+			main: data.user ? data.user.carte_info3_main : "Spandau - Berlin, Deutschland 14089",
 			alt: data.user ? data.user.carte_info3_alt : ""
 		},
 		info_4: {
-			icon: data.user ? data.user.carte_icon4_icon : "twitter",
-			main: data.user ? data.user.carte_info4_main : "r",
+			icon: data.user ? data.user.carte_icon4_icon : "ri:twitter-x-fill",
+			main: data.user ? data.user.carte_info4_main : "@detahq",
 			alt: data.user ? data.user.carte_info4_alt : ""
 		},
 		type: data.user ? data.user.type : "horizontal"
