@@ -163,6 +163,7 @@
 			/>
 
 			<SimpleButton
+				onClick={() => saveCard(card)}
 				props={{ label: "Download", variant: "tonal" }}
 			/>
 		</div>
