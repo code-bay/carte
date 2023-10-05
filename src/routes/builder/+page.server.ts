@@ -26,7 +26,7 @@ export const actions = {
 			await drive.put("bg.jpg", { data: buffer, contentType: image.type });
 		}
 
-		await db.put({
+		const user = await db.put({
 			email: `${data.get('email')}`,
 			name: `${data.get('name')}`,
 			phone: `${data.get('phone')}`,
@@ -35,5 +35,7 @@ export const actions = {
 			adress: `${data.get('adress')}`,
 			color: `${data.get('color')}`
 		}, "card-info");
+
+		return user
 	}
 } satisfies Actions

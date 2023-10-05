@@ -1,54 +1,30 @@
 <script lang="ts">
-	import Icon from '@iconify/svelte';
-
 	export let value: string;
 	export let props: {
 		label: string,
-		name: string,
-		disabled?: boolean,
-		error?: string,
-		icon?: string,
-		maxlength?: number,
-		minlength?: number,
-		readonly?: boolean,
-		required?: boolean,
-		text?: string,
+		name: string
 	}
 
-	const { label, name, disabled, error, icon, maxlength, minlength, readonly, required, text } = props
+	const { label, name } = props
 </script>
 
-<div class="field-wrapper">
-	<label class="text-field" class:hasIcon={icon} class:hasError={error} class:readonly>
-		<input 
-			class="input"
-			type="text"
-			{name}
-			placeholder={label}
-			{minlength}
-			{maxlength}
-			{disabled}
-			{readonly}
-			{required}
-			bind:value
-		>
-		<span class="label">{label}</span>
-		{#if icon} <Icon {icon} /> {/if}
-	</label>
-
-	{#if error || text}
-		<div class="supporting-text" class:hasError={error}>
-			{error ? error : text ? text : ""}
-		</div>
-	{/if}
+<div class="color-input">
+	<input
+		name={name}
+		class="input"
+		type="text"
+		minlength="7"
+		maxlength="7"
+		placeholder=" "
+		{value}
+		on:change={(e) => value = e.target.value}
+	/>
+	<span class="label">{label}</span>
+	<input class="color-picker" type="color" bind:value/>
 </div>
 
 <style lang="scss">
-.field-wrapper {
-	width: 100%;
-}
-
-.text-field {
+.color-input {
 	align-items: center;
 	display: flex;
 	font: var(--body-large);
@@ -130,51 +106,9 @@
 	z-index: 1;
 }
 
-.supporting-text {
-	color: var(--on-surface-variant);
-	font: var(--body-small);
-	height: 24px;
-	margin: 4px 2px;
-
-	&.hasError {
-		color: var(--error);
-	}
-}
-
-
-.hasError {
-	&::after {
-		box-shadow: inset 0px 0px 0px 2px var(--error) !important; 
-	}
-
-	.label {
-		color: var(--error) !important;
-	}
-}
-
-.hasIcon {
-	.input {
-		padding-left: 52px;
-
-		&:not(:placeholder-shown), &:-webkit-autofill {
-			& + .label {
-				transform: translate(-36px, -28px);
-			}
-		}
-	}
-
-	.label {
-		margin-left: 48px;
-	}
-
-	&:focus-within, &:active {
-		.label {
-			transform: translate(-36px, -28px);
-		}
-	}
-}
-
-.readonly {
-	pointer-events: none;
+.color-picker {
+	border: none;
+	margin-right: 16px;
+	padding: 0;
 }
 </style>

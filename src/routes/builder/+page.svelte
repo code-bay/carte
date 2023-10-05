@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Icon from "@iconify/svelte";
 	import SideSheet from "$components/SideSheet.svelte";
 	import SimpleButton from "$components/buttons/SimpleButton.svelte";
 	import TextField from "$components/TextField.svelte";
@@ -11,12 +10,21 @@
 	import { saveAs } from "file-saver";
 	import { innerWidth } from "$lib/stores/innerWidth";
 	import { isVisible } from "$lib/stores/isVisible";
+	import { enhance } from "$app/forms";
+	import { generateColorPalette, setPalette } from "$lib/index";
 	import type { PageData } from './$types';
+	import ColorInput from "$components/ColorInput.svelte";
 
 	export let data: PageData;
 
 	let card: any;
 	let coverImage: any;
+	let carteColor = data.userColor;
+
+	$: if(carteColor) {
+		const palette = generateColorPalette(carteColor);
+		setPalette(document.querySelector(':root'), palette)
+	}
 
 	function saveCard() {
 		toBlob(card).then(blob => {
@@ -27,7 +35,10 @@
 	}
 
 	let carte = {
+		name: "Dario Brito Calcinhas",
+		role: "CTO Higia",
 		company: "Higia Tech",
+		image: coverImage ? coverImage.files[0] : null,
 		info_1: {
 			icon: "mdi:phone",
 			main: "+55 (86) 99594-199",
@@ -48,10 +59,20 @@
 			main: "r",
 			alt: ""
 		},
-		name: "Heron Nepomuceno",
-		role: "Desenvolvedor Web",
 		type: "horizontal"
 	}
+
+  function openFile() {
+		if (coverImage.files[0]) {
+			const reader = new FileReader();
+			reader.onload = () => {
+				if(typeof reader.result == "string") {
+					carte.image = reader.result;
+				}
+			};
+			reader.readAsDataURL(coverImage.files[0]);
+		}
+  }
 
 	const customization = [
 		{ itemLimit: 3, label: "Horizontal", value: "horizontal" },
@@ -62,7 +83,7 @@
 
 	const infoIcons = [
 		{label: "Email", value:"mdi:email"},
-		{label: "Facebook", value:"ri:facebook-fill"}, // better going for the simpler and cleaner icon
+		{label: "Facebook", value:"ri:facebook-fill"},
 		{label: "Generic link", value:"mdi:link"},
 		{label: "Location", value:"mdi:location"},
 		{label: "Phone", value:"mdi:phone"},
@@ -72,7 +93,6 @@
 </script>
 
 <div class="builder builder--{carte.type}">
-
 	{#if carte.type === "horizontal"}
 		<HorizontalCard {carte} />
 	{:else if carte.type === "vertical"}
@@ -85,52 +105,35 @@
 			slot="body" 
 			method="POST" 
 			enctype="multipart/form-data"
+			use:enhance={() => {
+				return async ({ update }) => {
+					update({ reset: false });
+				};
+			}}
 		>
-			<SelectInput name="carte-type" bind:value={carte.type} options={customization}/>
-			{#each {length: config.itemLimit} as item, i} 
-				<SelectInput name="carte-info_{i+1}-icon" bind:value={carte[`info_${i+1}`].icon} options={infoIcons}/>
-			{/each}
+			<ColorInput 
+				bind:value={carteColor}
+				props={{
+					label: "Color",
+					name: "color"
+				}}
+			/>
 
-			<TextField props={{
-				label: "Name",
-				name: "name"
-			}}/>
-			<TextField props={{
-				label: "Job title",
-				name: "job-title"
-			}}/>
-			<TextField
-				type="tel"
-				props={{
-					label: "Phone",
-					name: "phone"
-				}}
+			<SelectInput 
+				name="carte-type" bind:value={carte.type} 
+				options={customization}
 			/>
-			<TextField
-				type="email"
-				props={{
-					label: "Email",
-					name: "email"
-				}}
+
+			<TextField 
+				bind:value={carte.name} 
+				props={{ label: "Name", name: "name" }}
 			/>
-			<TextField props={{
-				label: "Website",
-				name: "website"
-			}}/>
-			<TextField
-				props={{
-					label: "Adress",
-					name: "adress"
-				}}
+
+			<TextField 
+				bind:value={carte.role} 
+				props={{ label: "Role", name: "job-title" }}
 			/>
-			<input type="color" name="color"/>
-			<input
-				type="file"
-				accept="image/*"
-				bind:this={coverImage}
-				style="display: none;"
-				name="cover-image"
-			/>
+
 			<SimpleButton
 				onClick={() => coverImage.click()}
 				props={{
@@ -138,36 +141,65 @@
 					variant: "tonal"
 				}}
 			/>
+			
+			<input
+				type="file"
+				accept="image/*"
+				bind:this={coverImage}
+				style="display: none;"
+				name="cover-image"
+				on:change={() => openFile()}
+			/>
+
+			{#each {length: config.itemLimit} as item, i}
+				<div class="info-title">Info {i+1}</div>
+				<SelectInput 
+					name="carte-icon{i+1}-icon" bind:value={carte[`info_${i+1}`].icon} 
+					options={infoIcons}
+				/>
+
+				<TextField
+				bind:value={carte[`info_${i+1}`].main} 
+					props={{
+						label: `Main ${i+1}`,
+						name: `carte-info_${i+1}-main`
+					}}
+				/>
+
+				<TextField
+				bind:value={carte[`info_${i+1}`].alt} 
+					props={{
+						label: `Alternative ${i+1}`,
+						name: `carte-info_${i+1}-alt`
+					}}
+				/>
+			{/each}
 		</form>
 
 		<div class="bottom-actions" slot="footer">
 			<SimpleButton
-			type="submit"
-			props={{
-				label: "Save",
-				variant: "filled",
-				form: "card-builder"
-			}}/>
-	
+				type="submit"
+				props={{ label: "Save", variant: "filled", form: "card-builder" }}
+			/>
+
 			<SimpleButton
-			onClick={() => saveCard()}
-			props={{
-				label: "Download",
-				variant: "tonal"
-			}}/>
+				onClick={() => saveCard()}
+				props={{ label: "Download", variant: "tonal" }}
+			/>
 		</div>
 	</SideSheet>
 
 	{#if $innerWidth < 840 && $isVisible === false}
 		<FloatingActionButton 
-		onClick={() => $isVisible = true}
-		props={{
-			icon: "mdi:application-edit",
-			variant: "primary",
-			label: "Open editor",
-			size: "extended",
-			fixed: true
-		}}/>
+			onClick={() => $isVisible = true}
+			props={{
+				icon: "mdi:application-edit",
+				variant: "primary",
+				label: "Open editor",
+				size: "extended",
+				fixed: true
+			}}
+		/>
 	{/if}
 </div>
 
@@ -207,5 +239,10 @@
 	display: flex;
 	gap: 0 8px;
 	width: 100%;
+}
+
+.info-title {
+	font: var(--title-medium);
+	margin: 8px 0;
 }
 </style>

@@ -1,20 +1,21 @@
 import type { LayoutServerLoad } from './$types';
 import { generateColorPalette, generateRandomColor } from '$lib/index';
-import { Deta } from "deta"
-import { env } from '$env/dynamic/private';
+import { deta } from '$lib/server/deta';
 
-const deta = Deta(env.DETA_SECRET_KEY)
 const db = deta.Base('simple_db');
 
 export const load = (async () => {
 	const userData = await db.get("card-info") as any;
 	let palette: any;
+	let userColor: string;
 
 	if (userData && userData.color) {
-		palette = generateColorPalette(userData.color);
+		userColor = userData.color;
+		palette = generateColorPalette(userColor);
 	} else {
-		palette = generateColorPalette(generateRandomColor());
+		userColor = generateRandomColor();
+		palette = generateColorPalette(userColor);
 	}
 
-	return { palette }
+	return { palette, userColor }
 }) satisfies LayoutServerLoad;

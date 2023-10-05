@@ -24,7 +24,7 @@
 .input {
 	appearance: none;
 	align-items: center;
-	background: var(--surface-container-low);
+	background: none;
 	background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="%23C7C6CA" d="m11.3 14.3l-2.6-2.6q-.475-.475-.212-1.087T9.425 10h5.15q.675 0 .938.613T15.3 11.7l-2.6 2.6q-.15.15-.325.225T12 14.6q-.2 0-.375-.075T11.3 14.3Z"%3E%3C/path%3E%3C/svg%3E');
   background-repeat: no-repeat;
   background-position: right 0.7rem top 50%;

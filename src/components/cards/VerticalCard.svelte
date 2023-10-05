@@ -3,20 +3,7 @@
 
 	export let carte: any;
 
-	let src: string | null | undefined = "/upload.webp";
-	let inputFile: any;
-
-  function openFile() {
-		if (inputFile.files[0]) {
-			const reader = new FileReader();
-			reader.onload = () => {
-				if(typeof reader.result == "string") {
-					src = reader.result;
-				}
-			};
-			reader.readAsDataURL(inputFile.files[0]);
-		}
-  }
+	let defaultImage: string = "/avatar.png";
 </script>
 
 <div class="card">
@@ -24,10 +11,7 @@
 		{#if carte.company}
 			<div class="carte-company">{carte.company}</div>
 		{/if}
-		<label class="photo" on:change={() => openFile()}>
-			<input type="file" {src} bind:this={inputFile} style="display: none;"/>
-			<img {src} alt="Profile"/>
-		</label>
+		<img class="photo" src={carte.image ?? defaultImage} alt="Profile"/>
 	</div>
 	<div class="card__body">
 		<h2 class="carte-name">{carte.name}</h2>
@@ -77,10 +61,7 @@
 
 <div class="back-card">
 	<div class="back-card__content">
-		<label class="photo" on:change={() => openFile()}>
-			<input type="file" {src} bind:this={inputFile} style="display: none;"/>
-			<img {src} alt="company"/>
-		</label>
+		<img class="photo" src={carte.image ?? defaultImage} alt="company"/>
 		<div class="carte-company carte-company--back">{carte.company}</div>
 	</div>
 	<svg class="pattern" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">
