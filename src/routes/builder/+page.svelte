@@ -43,26 +43,26 @@
 	let carte = {
 		name: "John Doe",
 		role: "Web Developer",
-		company: "Higia Tech",
+		company: "Deta Enterprise",
 		image: coverImage ? coverImage.files[0] : null,
 		info_1: {
 			icon: "mdi:phone",
-			main: "+55 (86) 99594-199",
-			alt: "+55 (86) 99594-199"
+			main: "+49 1522 343333",
+			alt: "+49 1522 343333"
 		},
 		info_2: {
-			icon: "link",
-			main: "https://heron.pages.dev",
-			alt: "https://heron.pages.dev"
+			icon: "mdi:link",
+			main: "https://example.com",
+			alt: ""
 		},
 		info_3: {
-			icon: "location",
-			main: "Parnaíba, Piauí - Bairro Dirceu Arcoverde",
+			icon: "mdi:location",
+			main: "New York, USA",
 			alt: ""
 		},
 		info_4: {
-			icon: "twitter",
-			main: "r",
+			icon: "mdi:twitter",
+			main: "john_twitter",
 			alt: ""
 		},
 		type: "horizontal"
