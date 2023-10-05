@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { PageData } from './$types';
 	import SideSheet from "$components/SideSheet.svelte";
 	import SimpleButton from "$components/buttons/SimpleButton.svelte";
 	import TextField from "$components/TextField.svelte";
@@ -8,15 +9,19 @@
 	import VerticalCard from "$components/cards/VerticalCard.svelte";
 	import ColorInput from "$components/ColorInput.svelte";
 	import ImageInput from "$components/ImageInput.svelte";
+	import SnackBar from '$components/SnackBar.svelte';
 	import { toBlob } from 'html-to-image';
 	import { saveAs } from "file-saver";
 	import { innerWidth } from "$lib/stores/innerWidth";
 	import { isVisible } from "$lib/stores/isVisible";
 	import { enhance } from "$app/forms";
 	import { generateColorPalette, setPalette } from "$lib/index";
-	import type { PageData } from './$types';
+	import { createNotification } from "$lib/stores/notifications";
 
 	export let data: PageData;
+	export let form;
+
+	$: if(form?.ok) createNotification({text: "Card save successfully", time: 3000})
 
 	let card: any;
 	let coverImage: any;
@@ -62,18 +67,6 @@
 		},
 		type: "horizontal"
 	}
-
-  function openFile() {
-		if (coverImage.files[0]) {
-			const reader = new FileReader();
-			reader.onload = () => {
-				if(typeof reader.result == "string") {
-					carte.image = reader.result;
-				}
-			};
-			reader.readAsDataURL(coverImage.files[0]);
-		}
-  }
 
 	const customization = [
 		{ itemLimit: 3, label: "Horizontal", value: "horizontal" },
@@ -193,6 +186,7 @@
 		/>
 	{/if}
 </div>
+<SnackBar />
 
 <style lang="scss">
 .builder {
