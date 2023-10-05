@@ -41,7 +41,6 @@
 	}
 
 	let carte = {
-<<<<<<< HEAD
 		name: data.user ? data.user.name : "Dario Brito Calcinhas",
 		role: data.user ? data.user.role : "CTO Higia",
 		company: data.user ? data.user.company : "Higia Tech",
@@ -65,31 +64,6 @@
 			icon: data.user ? data.user.carte_icon4_icon : "twitter",
 			main: data.user ? data.user.carte_info4_main : "r",
 			alt: data.user ? data.user.carte_info4_alt : ""
-=======
-		name: "John Doe",
-		role: "Web Developer",
-		company: "Deta Enterprise",
-		image: coverImage ? coverImage.files[0] : null,
-		info_1: {
-			icon: "mdi:phone",
-			main: "+49 1522 343333",
-			alt: "+49 1522 343333"
-		},
-		info_2: {
-			icon: "mdi:link",
-			main: "https://example.com",
-			alt: ""
-		},
-		info_3: {
-			icon: "mdi:location",
-			main: "New York, USA",
-			alt: ""
-		},
-		info_4: {
-			icon: "mdi:twitter",
-			main: "john_twitter",
-			alt: ""
->>>>>>> 6fb6ffcca0748f176c49e04d2fa01b7fba80353d
 		},
 		type: data.user ? data.user.type : "horizontal"
 	}
