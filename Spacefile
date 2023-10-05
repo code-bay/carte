@@ -1,8 +1,8 @@
 # Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
 v: 0
-icon: ./carte-deta-optmized.png
+icon: ./icon.png
 micros:
-  - name: carte
+  - name: Carte
     src: ./
     engine: svelte-kit
     primary: true
