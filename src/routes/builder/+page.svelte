@@ -23,11 +23,11 @@
 
 	$: if(carteColor) {
 		const palette = generateColorPalette(carteColor);
-		setPalette(document.querySelector(':root'), palette)
+		setPalette(document.querySelector(':root'), palette);
 	}
 
 	function saveCard() {
-		toBlob(card).then(blob => {
+		toBlob(card, { style: { gap: "0px" } }).then(blob => {
 			if (blob) {
 				saveAs(blob, 'card.png')
 			}		
@@ -35,31 +35,31 @@
 	}
 
 	let carte = {
-		name: "Dario Brito Calcinhas",
-		role: "CTO Higia",
-		company: "Higia Tech",
+		name: data.user ? data.user.name : "Dario Brito Calcinhas",
+		role: data.user ? data.user.role : "CTO Higia",
+		company: data.user ? data.user.company : "Higia Tech",
 		image: coverImage ? coverImage.files[0] : null,
 		info_1: {
-			icon: "mdi:phone",
-			main: "+55 (86) 99594-199",
-			alt: "+55 (86) 99594-199"
+			icon: data.user ? data.user.carte_icon1_icon : "mdi:phone",
+			main: data.user ? data.user.carte_info1_main : "+55 (86) 99594-199",
+			alt: data.user ? data.user.carte_info1_alt : "+55 (86) 99594-199"
 		},
 		info_2: {
-			icon: "link",
-			main: "https://heron.pages.dev",
-			alt: "https://heron.pages.dev"
+			icon: data.user ? data.user.carte_icon2_icon : "link",
+			main: data.user ? data.user.carte_info2_main : "https://heron.pages.dev",
+			alt: data.user ? data.user.carte_info2_alt : "https://heron.pages.dev"
 		},
 		info_3: {
-			icon: "location",
-			main: "Parnaíba, Piauí - Bairro Dirceu Arcoverde",
-			alt: ""
+			icon: data.user ? data.user.carte_icon3_icon : "location",
+			main: data.user ? data.user.carte_info3_main : "Parnaíba, Piauí - Bairro Dirceu Arcoverde",
+			alt: data.user ? data.user.carte_info3_alt : ""
 		},
 		info_4: {
-			icon: "twitter",
-			main: "r",
-			alt: ""
+			icon: data.user ? data.user.carte_icon4_icon : "twitter",
+			main: data.user ? data.user.carte_info4_main : "r",
+			alt: data.user ? data.user.carte_info4_alt : ""
 		},
-		type: "horizontal"
+		type: data.user ? data.user.type : "horizontal"
 	}
 
   function openFile() {
@@ -94,9 +94,9 @@
 
 <div class="builder builder--{carte.type}">
 	{#if carte.type === "horizontal"}
-		<HorizontalCard {carte} />
+		<HorizontalCard bind:card={card} {carte} />
 	{:else if carte.type === "vertical"}
-		<VerticalCard {carte} />
+		<VerticalCard bind:card={card} {carte} />
 	{/if}
 
 	<SideSheet props={{ title: "Card editor" }}>
@@ -131,7 +131,12 @@
 
 			<TextField 
 				bind:value={carte.role} 
-				props={{ label: "Role", name: "job-title" }}
+				props={{ label: "Role", name: "role" }}
+			/>
+
+			<TextField 
+				bind:value={carte.company} 
+				props={{ label: "Company", name: "company" }}
 			/>
 
 			<SimpleButton
