@@ -58,7 +58,7 @@
 		}
 
 		.label {
-			background: var(--surface-container-high);
+			background: var(--surface);
 			color: var(--primary);
 			font: var(--body-small);
 			transform: translateY(-28px);
@@ -88,7 +88,7 @@
 
 	&:not(:placeholder-shown), &:-webkit-autofill {
 		& + .label {
-			background: var(--surface-container);
+			background: var(--surface);
 			transform: translateY(-28px);
 			font: var(--body-small);
 		}
