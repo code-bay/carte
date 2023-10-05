@@ -2,11 +2,9 @@ import type { PageServerLoad, Actions } from './$types';
 import { Deta } from "deta"
 import { env } from '$env/dynamic/private';
 
-const deta = Deta(env.DETA_SECRET_KEY)
-const db = deta.Base('simple_db');
-const drive = deta.Drive('card_images')
-
 export const load = (async () => {
+	const deta = Deta(env.DETA_SECRET_KEY)
+	const db = deta.Base('simple_db');
 	const user = await db.get("card-info");
 
 	return { user };
@@ -14,6 +12,9 @@ export const load = (async () => {
 
 export const actions = {
 	default: async ({ request }) => {
+		const deta = Deta(env.DETA_SECRET_KEY)
+		const db = deta.Base('simple_db');
+		const drive = deta.Drive('card_images')
 		const data = await request.formData();
 
 		const image = data.get('cover-image') as File;
