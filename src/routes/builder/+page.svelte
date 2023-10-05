@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { PageData } from './$types';
 	import SideSheet from "$components/SideSheet.svelte";
 	import SimpleButton from "$components/buttons/SimpleButton.svelte";
 	import TextField from "$components/TextField.svelte";
@@ -6,16 +7,21 @@
 	import SelectInput from "$components/SelectInput.svelte";
 	import HorizontalCard from "$components/cards/HorizontalCard.svelte";
 	import VerticalCard from "$components/cards/VerticalCard.svelte";
+	import ColorInput from "$components/ColorInput.svelte";
+	import ImageInput from "$components/ImageInput.svelte";
+	import SnackBar from '$components/SnackBar.svelte';
 	import { toBlob } from 'html-to-image';
 	import { saveAs } from "file-saver";
 	import { innerWidth } from "$lib/stores/innerWidth";
 	import { isVisible } from "$lib/stores/isVisible";
 	import { enhance } from "$app/forms";
 	import { generateColorPalette, setPalette } from "$lib/index";
-	import type { PageData } from './$types';
-	import ColorInput from "$components/ColorInput.svelte";
+	import { createNotification } from "$lib/stores/notifications";
 
 	export let data: PageData;
+	export let form;
+
+	$: if(form?.ok) createNotification({text: "Card save successfully", time: 3000})
 
 	let card: any;
 	let coverImage: any;
@@ -35,6 +41,7 @@
 	}
 
 	let carte = {
+<<<<<<< HEAD
 		name: data.user ? data.user.name : "Dario Brito Calcinhas",
 		role: data.user ? data.user.role : "CTO Higia",
 		company: data.user ? data.user.company : "Higia Tech",
@@ -58,21 +65,34 @@
 			icon: data.user ? data.user.carte_icon4_icon : "twitter",
 			main: data.user ? data.user.carte_info4_main : "r",
 			alt: data.user ? data.user.carte_info4_alt : ""
+=======
+		name: "John Doe",
+		role: "Web Developer",
+		company: "Deta Enterprise",
+		image: coverImage ? coverImage.files[0] : null,
+		info_1: {
+			icon: "mdi:phone",
+			main: "+49 1522 343333",
+			alt: "+49 1522 343333"
+		},
+		info_2: {
+			icon: "mdi:link",
+			main: "https://example.com",
+			alt: ""
+		},
+		info_3: {
+			icon: "mdi:location",
+			main: "New York, USA",
+			alt: ""
+		},
+		info_4: {
+			icon: "mdi:twitter",
+			main: "john_twitter",
+			alt: ""
+>>>>>>> 6fb6ffcca0748f176c49e04d2fa01b7fba80353d
 		},
 		type: data.user ? data.user.type : "horizontal"
 	}
-
-  function openFile() {
-		if (coverImage.files[0]) {
-			const reader = new FileReader();
-			reader.onload = () => {
-				if(typeof reader.result == "string") {
-					carte.image = reader.result;
-				}
-			};
-			reader.readAsDataURL(coverImage.files[0]);
-		}
-  }
 
 	const customization = [
 		{ itemLimit: 3, label: "Horizontal", value: "horizontal" },
@@ -90,6 +110,11 @@
 		{label: "Twitter", value:"mdi:twitter"},
 		{label: "X / Twitter", value:"ri:twitter-x-fill"}
 	]
+
+
+	function setImageSrc(event) {
+		carte.image = event.detail.src;
+	}
 </script>
 
 <div class="builder builder--{carte.type}">
@@ -111,6 +136,8 @@
 				};
 			}}
 		>
+			<ImageInput on:image={setImageSrc}/>
+			
 			<ColorInput 
 				bind:value={carteColor}
 				props={{
@@ -137,23 +164,6 @@
 			<TextField 
 				bind:value={carte.company} 
 				props={{ label: "Company", name: "company" }}
-			/>
-
-			<SimpleButton
-				onClick={() => coverImage.click()}
-				props={{
-					label: "Upload image",
-					variant: "tonal"
-				}}
-			/>
-			
-			<input
-				type="file"
-				accept="image/*"
-				bind:this={coverImage}
-				style="display: none;"
-				name="cover-image"
-				on:change={() => openFile()}
 			/>
 
 			{#each {length: config.itemLimit} as item, i}
@@ -207,6 +217,7 @@
 		/>
 	{/if}
 </div>
+<SnackBar />
 
 <style lang="scss">
 .builder {

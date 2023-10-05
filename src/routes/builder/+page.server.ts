@@ -51,6 +51,6 @@ export const actions = {
 			color: `${data.get('color')}`
 		}, "card-info");
 
-		return user
+		return { ok: true }
 	}
 } satisfies Actions
