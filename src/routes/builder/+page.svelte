@@ -6,6 +6,8 @@
 	import SelectInput from "$components/SelectInput.svelte";
 	import HorizontalCard from "$components/cards/HorizontalCard.svelte";
 	import VerticalCard from "$components/cards/VerticalCard.svelte";
+	import ColorInput from "$components/ColorInput.svelte";
+	import ImageInput from "$components/ImageInput.svelte";
 	import { toBlob } from 'html-to-image';
 	import { saveAs } from "file-saver";
 	import { innerWidth } from "$lib/stores/innerWidth";
@@ -13,7 +15,6 @@
 	import { enhance } from "$app/forms";
 	import { generateColorPalette, setPalette } from "$lib/index";
 	import type { PageData } from './$types';
-	import ColorInput from "$components/ColorInput.svelte";
 
 	export let data: PageData;
 
@@ -35,8 +36,8 @@
 	}
 
 	let carte = {
-		name: "Dario Brito Calcinhas",
-		role: "CTO Higia",
+		name: "John Doe",
+		role: "Web Developer",
 		company: "Higia Tech",
 		image: coverImage ? coverImage.files[0] : null,
 		info_1: {
@@ -90,6 +91,11 @@
 		{label: "Twitter", value:"mdi:twitter"},
 		{label: "X / Twitter", value:"ri:twitter-x-fill"}
 	]
+
+
+	function setImageSrc(event) {
+		carte.image = event.detail.src;
+	}
 </script>
 
 <div class="builder builder--{carte.type}">
@@ -111,6 +117,8 @@
 				};
 			}}
 		>
+			<ImageInput on:image={setImageSrc}/>
+			
 			<ColorInput 
 				bind:value={carteColor}
 				props={{
@@ -132,23 +140,6 @@
 			<TextField 
 				bind:value={carte.role} 
 				props={{ label: "Role", name: "job-title" }}
-			/>
-
-			<SimpleButton
-				onClick={() => coverImage.click()}
-				props={{
-					label: "Upload image",
-					variant: "tonal"
-				}}
-			/>
-			
-			<input
-				type="file"
-				accept="image/*"
-				bind:this={coverImage}
-				style="display: none;"
-				name="cover-image"
-				on:change={() => openFile()}
 			/>
 
 			{#each {length: config.itemLimit} as item, i}
