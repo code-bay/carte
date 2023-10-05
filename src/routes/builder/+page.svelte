@@ -10,12 +10,10 @@
 	import ColorInput from "$components/ColorInput.svelte";
 	import ImageInput from "$components/ImageInput.svelte";
 	import SnackBar from '$components/SnackBar.svelte';
-	import { toBlob } from 'html-to-image';
-	import { saveAs } from "file-saver";
 	import { innerWidth } from "$lib/stores/innerWidth";
 	import { isVisible } from "$lib/stores/isVisible";
 	import { enhance } from "$app/forms";
-	import { generateColorPalette, setPalette } from "$lib/index";
+	import { generateColorPalette, setPalette, saveCard } from "$lib/index";
 	import { createNotification } from "$lib/stores/notifications";
 
 	export let data: PageData;
@@ -26,25 +24,18 @@
 	let card: any;
 	let coverImage: any;
 	let carteColor = data.userColor;
+	let dataImage: any;
 
 	$: if(carteColor) {
 		const palette = generateColorPalette(carteColor);
 		setPalette(document.querySelector(':root'), palette);
 	}
 
-	function saveCard() {
-		toBlob(card, { style: { gap: "0px" } }).then(blob => {
-			if (blob) {
-				saveAs(blob, 'card.png')
-			}		
-		})
-	}
-
 	let carte = {
 		name: data.user ? data.user.name : "Dario Brito Calcinhas",
 		role: data.user ? data.user.role : "CTO Higia",
 		company: data.user ? data.user.company : "Higia Tech",
-		image: coverImage ? coverImage.files[0] : null,
+		image: data.file ? data.file : null,
 		info_1: {
 			icon: data.user ? data.user.carte_icon1_icon : "mdi:phone",
 			main: data.user ? data.user.carte_info1_main : "+55 (86) 99594-199",
@@ -110,7 +101,7 @@
 				};
 			}}
 		>
-			<ImageInput on:image={setImageSrc}/>
+			<ImageInput src={data.file} on:image={setImageSrc} />
 			
 			<ColorInput 
 				bind:value={carteColor}
@@ -172,7 +163,7 @@
 			/>
 
 			<SimpleButton
-				onClick={() => saveCard()}
+				onClick={() => saveCard(card)}
 				props={{ label: "Download", variant: "tonal" }}
 			/>
 		</div>

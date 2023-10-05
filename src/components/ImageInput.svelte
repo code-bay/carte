@@ -3,7 +3,7 @@
 
 	const dispatch = createEventDispatcher();
 	let coverImage: any;
-	let src: any;
+	export let src: any;
 
 	function openFile() {
 		if (coverImage.files[0]) {

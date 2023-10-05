@@ -7,11 +7,16 @@ export const load = (async () => {
 	const db = deta.Base('simple_db');
 	const drive = deta.Drive('card_images');
 	const user = await db.get("card-info");
-	const image = await drive.get("bg.jpg") as Blob;
-	const img = URL.createObjectURL(image)
-	console.log(img)
+	const image = await drive.get("bg.jpg") as Blob
+	let file: any
+	if (image) {
+		const buffer = Buffer.from(await image.arrayBuffer())
+		const base64 = buffer.toString('base64')
+	
+		file = `data:${image.type};base64,${base64}`
+	}
 
-	return { user, img };
+	return { user, file };
 }) satisfies PageServerLoad;
 
 export const actions = {
